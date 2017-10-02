@@ -1,0 +1,46 @@
+
+ 
+ 
+
+1. Prerequisite
+***************
+ 	System should have below software and tools.
+		JDK 1.5 and above
+		Maven 3
+	
+2. Two applications are packaged here 1) config-server 2) validation-service;  step 3 should be done for both applications.
+   Config-server should be deployed first.
+
+3. Build & Deploy :
+******************
+	Use any one of the below two ways to build and deploy the application.
+	1) mvn spring-boot:run
+	2) a) mvn clean install
+	   b) navigate to target folder
+	   c) java -jar config-server-0.0.1-SNAPSHOT.jar / java -jar validation-service-0.0.1-SNAPSHOT.jar
+
+4. To run Test cases:
+*********************
+	mvn test
+
+5. Application testing 
+*********************
+    open chrome Advanced Rest Client or postman client and give the below details to trigger the request.
+	    URL: http://localhost:8002/password/validate
+	  	Method type : POST
+	  	Body: <Password>
+    Change the password combinations and click send button. 
+
+
+6.Notes on config-server
+*************************
+    validation-service calls password validation rules and related messages as Configuration.
+    Configuration is located in  https://github.com/PhaniRaag/CloudConfig/ConfigData ; with active profile : India
+	Configuration can be updated at any time with out stopping any application. 
+	Updates in Configuration can be read by http://localhost:8002/refresh.  
+	No need to restart any application to reflect config changes; the above mentioned refresh URL on validation-service service will recreate proxies of Configuration. 
+	To skip the Cloud config-server and have local properties as configuration, stop the config-server and refresh the validation-service. 
+	Test Configuration for unit testing of config-server : src/test/resources/offline-repository/testConfig.properties 
+    Test Configuration for unit testing of validation-service : src/test/resources/application-test.properties 
+
+
